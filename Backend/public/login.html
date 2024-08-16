@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Login</title>
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet"><link rel="stylesheet" href="./logform.css">
+  <style>
+body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #2c3338;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .login-container {
+            width: 300px;
+            padding: 20px;
+            background-color: #2c3338;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #fff;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #fff;
+        }
+
+        input[type="text"],
+        input[type="password"],
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            border: 10px;
+            border-radius: 5px;
+            background-color: #3498db;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+  </style>
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<body class="align">
+
+    <div class="login-container">
+        <h2>Login</h2>
+        <form id="login-form"> <!-- Replace "login.php" with your actual login script -->
+           
+           
+            <div class="form-group">
+                <label for="E-mail">E-mail</label>
+                <input type="text" id="E-mail" name="email" placeholder="E-mail"equired>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" placeholder="password"required>
+            </div>
+           <button>Submit</button>
+              </script>
+              
+        </form>
+    </div>
+  <script>
+        // JavaScript to handle form submission
+        document.getElementById('login-form').addEventListener('submit', async function(event) {
+            event.preventDefault(); // Prevent the form from submitting normally
+
+            // Get form data
+            const formData = new FormData(this);
+            const data = {};
+            for (let [key, value] of formData.entries()) {
+                data[key] = value;
+            }
+
+            // Send form data to backend
+            try {
+                const response = await fetch('http://localhost:3003/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+                if (response.ok) {
+                    const responseData = await response.json();
+                    alert('Login successful!');
+                    localStorage.setItem('loggedInUserEmail', data['email']);
+                    window.location.href = 'about.html';
+                    // Optionally, redirect the user to another page after successful login
+                    // window.location.href = '/dashboard.html';
+                } else {
+                    const errorData = await response.json();
+                    alert('Error: ' + errorData.error);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An unexpected error occurred. Please try again later.');
+            }
+        });
+    
+  </script>
+
+</body>
+<!-- partial -->
+  
+</body>
+</html>
